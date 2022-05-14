@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main_content">
+        <input type="text" placeholder="City" id="cityField">
+        <button  id="btn">Find</button>
+        <div id="output">
+            <h1 id="cityName"></h1>
+            <h4 id=""></h4>
+        </div>
+    </div>
+    <script>
+      let input =document.getElementById("cityField");
+     let button =document.getElementById("btn");
+     button.addEventListener("click",()=>{
+        fetch("https://api.openweathermap.org/data/2.5/weather?lat=22.281730456695904&lon=22.281730456695904&appid={da91bda8af6231693b5eeb3df5ee4948}")
+        .then(Response=> Response.json())
+        .then(data=>console.log(data))
+     })
+    </script>
+</body>
+</html>

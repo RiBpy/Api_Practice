@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Json</title>
+</head>
+<style>
+   .allUser {   
+        display:flex;
+        flex-direction:row;
+        justify-content: space-between;
+
+    }
+    #userID li{
+        padding:8px;
+        margin-top:5px;
+        margin-bottom:5px;
+        color:rgb(5, 64, 78);
+        border:1px solid black;
+        border-radius:5px;
+    }
+    
+    .user_info{
+        height:fit-content;
+        margin-top:25px;
+        margin-right:20px;
+        margin-bottom:5px;
+        color:rgb(5, 64, 78);
+        padding:10px;
+        border:1px solid black;
+    }
+    #loadBtn{
+        padding:6px 10px;
+        border-radius:5px;
+        background: #000;
+        color:white;
+        border:1px solid white;
+    }
+  #loadInp{
+      padding:6px 20px;
+      border-radius:8px;
+  }
+</style>
+<body>
+    <h1>User Name from api</h1>
+    <div class="load_user">
+        <input type="text" placeholder="Enter User Number" id="loadInp"><button id="loadBtn">Load</button>
+    </div>
+   <div class="allUser">
+    <ol id="userID" type="0">
+
+    </ol>
+    <div class="user_info">
+        <div id="userInfo">
+
+        </div>
+    </div>
+   </div>
+    
+    <script>
+       
+        document.getElementById("loadBtn").addEventListener("click",(e)=>{
+            e.preventDefault();
+            const count=document.getElementById("loadInp").value;
+
+            const ol=document.getElementById("userID");
+            ol.innerHTML="";
+            fetch('https://jsonplaceholder.typicode.com/users')
+            .then(response => response.json())
+            .then(json => displayUser(json))
+        function displayUser(json){
+            json=json.slice(0,count)
+           // const Names=users.map(user => user.username) ;
+           json.map(user => {
+                const list=document.createElement("li");
+                list.innerHTML=`<strong>Name:</strong>${user.username} <button onclick="userDetail(${user.id})">Details</button>`;
+                ol.appendChild(list);
+           })
+        }
+
+        });
+        
+        function userDetail(userId){
+            fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+            .then(response => response.json())
+            .then(json => {
+                const user=document.getElementById("userInfo")
+                user.innerHTML=`<strong>User Name:</strong>${json.username} </br> <strong>Email:</strong>${json.email} </br> <strong>Phone:</strong>${json.phone} `;
+            })
+        }
+
+    </script>
+</body>
+</html>
